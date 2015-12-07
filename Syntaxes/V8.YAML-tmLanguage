@@ -1,0 +1,140 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: V8 tick processor log
+scopeName: source.log
+fileTypes: 
+- log
+- v8.log
+uuid: 68d9a4a1-519b-48f0-ab7a-9d78d30c2db5
+
+patterns:
+- include: '#firstline'
+- include: '#regexp'
+- include: '#path'
+- include: '#support'
+- include: '#keyword'
+- include: '#function'
+- include: '#constant'
+- include: '#section'
+
+
+repository:
+  firstline:
+    patterns:
+      - match: ^(Statistical).*$\n?
+        name: comment.line.firstline.v8.log
+
+  function:
+    patterns:
+    - match: >-
+        (?x)
+          \b(
+            fs\.(
+              readFileSync
+            )|
+            Buffer\.(
+              write|toString
+            )|
+            anonymous
+          )\b
+      name: entity.name.function.v8.log
+
+    - match: >-
+        (?x)
+          \b((
+            DELETE|
+            join|
+            parseInt|match|filter|
+            defineProperties|decodeURIComponent|
+            split|
+          )\s+(native))\b
+      captures:
+        '2':
+          name: entity.name.function.v8.log
+        '3':
+          name: support.type.v8.log
+      # name: entity.name.function.v8.log
+
+  support:
+    patterns:
+    - match: >-
+        (?x)
+          \b(
+            LazyCompile|RegExp|Stub|Function|Builtin|
+            StoreMegamorphic|Eval|Script|Handler
+          )\b
+      name: support.class.v8.log
+
+  keyword:
+    patterns:
+    - match: >-
+        (?x)
+          \b(
+            ticks|total|nonlib|name|cpp|parent
+          )\b
+      name: keyword.operator.v8.log
+
+    - match: >-
+        (?x)
+          \b(
+            native
+          )\b
+      name: support.type.v8.log
+
+    - match: >-
+        (?x)
+          \s(
+            ~|\*
+          )
+      name: keyword.operator.v8.log
+
+    - match: >-
+        (?x)
+          \b(
+            %
+          )\s
+      name: keyword.operator.v8.log
+
+  constant:
+    patterns:
+    - match: >-
+        (?x)
+          \b(
+            ([0-9]+(\.[0-9]+))|
+            ([0-9]+)
+          )\b
+      name: constant.numeric.v8.log
+
+  regexp:
+    patterns:
+    - match: (RegExp):\s*(.*?)$
+      captures:
+        '1':
+          name: support.class.v8.log
+        '2':
+          name: string.regexp.v8.log
+      # name: string.regexp.v8.log
+
+  section:
+    patterns:
+    - match: ^\s*(\[)(.*?)(\])
+      captures:
+        '1':
+          name: keyword.other.v8.log
+        '2':
+          name: string.other.v8.log
+        '3':
+          name: keyword.other.v8.log
+      
+      name: meta.tag.section.v8.log
+
+  path:
+    patterns:
+    - match: (([\w\d\.\-\_]+)?(:)?((([\/|\/\/|\\|\\\\])[\w\d\.\-\_\ ]+)+)(([\w\d\-\_\ ]+)(\.)([a-zA-Z\.]+)))(:)?
+      captures:
+        '1':
+          name: string.other.path.v8.log
+    - match: (([\w\d\-\_]+)(\.)(js|coffee|ts|ls))(:)
+      captures:
+        '1':
+          name: string.other.path.v8.log
