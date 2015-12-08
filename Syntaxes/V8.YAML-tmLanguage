@@ -61,18 +61,23 @@ repository:
         (?x)
           \b(
             LazyCompile|RegExp|Stub|Function|Builtin|
+            StorePolymorphicIC|KeyedStoreIC|
+            KeyedStorePolymorphicIC|
             StoreMegamorphic|Eval|Script|Handler
           )\b
       name: support.class.v8.log
 
   keyword:
     patterns:
-    - match: >-
-        (?x)
-          \b(
-            ticks|total|nonlib|name|cpp|parent
-          )\b
+    - match: ^\s*((ticks|total|nonlib|name|cpp|parent)\s*)+$
       name: keyword.operator.v8.log
+      # patterns:
+      # - match: >-
+      #     (?x)
+      #       \b(
+      #         ticks|total|nonlib|name|cpp|parent
+      #       )\b
+      #   name: keyword.operator.v8.log
 
     - match: >-
         (?x)

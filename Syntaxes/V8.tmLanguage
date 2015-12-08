@@ -125,10 +125,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?x)
-  \b(
-    ticks|total|nonlib|name|cpp|parent
-  )\b</string>
+					<string>^\s*((ticks|total|nonlib|name|cpp|parent)\s*)+$</string>
 					<key>name</key>
 					<string>keyword.operator.v8.log</string>
 				</dict>
@@ -253,6 +250,8 @@
 					<string>(?x)
   \b(
     LazyCompile|RegExp|Stub|Function|Builtin|
+    StorePolymorphicIC|KeyedStoreIC|
+    KeyedStorePolymorphicIC|
     StoreMegamorphic|Eval|Script|Handler
   )\b</string>
 					<key>name</key>
